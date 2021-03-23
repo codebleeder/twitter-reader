@@ -36,25 +36,6 @@ public class Twitter4j {
        return null;
     }
 
-    public List<TweetDTO> getTopTenTweets(){
-        List<Status> statuses = getTopTenStatus();
-        List<TweetDTO> tweetDTOS = statuses
-                .stream()
-                .map(s->statusToTweetDTO(s))
-                .sorted((s1, s2)->Long.compare(s2.getFavoriteCount(), s1.getFavoriteCount()))
-                .sorted((s1, s2)->Long.compare(s2.getRtCount(), s1.getRtCount()))
-                .collect(Collectors.toList());
-        return tweetDTOS;
-    }
-
-    private static TweetDTO statusToTweetDTO(Status status){
-        return new TweetDTO(status.getUser().getScreenName(),
-                status.getText(),
-                status.getFavoriteCount(),
-                status.getRetweetCount());
-
-    }
-
     private String statusToEmbed(Status status){
         String url = "https://twitter.com/"+status.getUser().getName()+"/status/"+status.getId();
         try {
